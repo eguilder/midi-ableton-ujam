@@ -1,0 +1,26 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Generated MIDI files
+notes_beatmaker/
+notes_subcraft/
+notes_usynth/
+midi_files_ableton_sequential/
+midi_files_standard_sequential/
+middle_c_range_sequential/
+
+# Virtual environments
+venv/
+env/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
