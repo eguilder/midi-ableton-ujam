@@ -49,7 +49,7 @@ Each script will create a folder with sequentially numbered MIDI files ready for
 
 
 ## How It Works
-Octave Correction: Automatically adjusts for Ableton's piano roll display (one octave lower than standard MIDI)
-Track Naming: Embeds track names in MIDI metadata (Ableton shows these instead of "Track 0")
-Sequential Numbering: Files are numbered 01, 02, 03... from lowest to highest pitch
-Descriptive Filenames: Match Ableton track names for easy identification
+- Octave Correction: Automatically adjusts for Ableton's piano roll display (one octave lower than standard MIDI)
+- Track Naming: Embeds track names in MIDI metadata (Ableton shows these instead of "Track 0")
+- Sequential Numbering: Files are numbered 01, 02, 03... from lowest to highest pitch
+- Descriptive Filenames: Match Ableton track names for easy identification
