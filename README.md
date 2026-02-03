@@ -1,6 +1,6 @@
 # MIDI Generators for Ableton Live
 
-A collection of Python scripts for generating MIDI files specifically designed for Ableton Live, with proper track naming and octave correction.
+A collection of Python scripts for generating MIDI files specifically designed to control Ujam sequencers in Ableton Live, with proper MIDI clip track naming and octave correction. The notes are already created in this repo and can be used directly in Ableton Live.
 
 ## Features
 
@@ -12,19 +12,19 @@ A collection of Python scripts for generating MIDI files specifically designed f
 
 ## Generators Included
 
-### 1. Main Ableton Generator (`main_ableton_generator.py`)
+### 1. Main Ableton Generator (`create_notes.py`)
 Generates any range of notes from C0 to C6 in both Ableton and Standard MIDI notation.
 
-### 2. Beatmaker Generator (`beatmaker_generator.py`)
+### 2. Beatmaker Generator (`beatmaker_notes.py`)
 Generates specific notes for beatmaking with section names:
 - C#1 (Intro), D#1 (Fill), F#1 (Verse 1), G#1 (Verse 2), A#1 (Fill)
 - C#2 (Chorus 1), D#2 (Chorus 2), F#2 (Break), G#2 (Special), A#2 (Ending)
 
-### 3. Subcraft Generator (`subcraft_generator.py`)
+### 3. Subcraft Generator (`subcraft_notes.py`)
 Generates C2 through E2 with loop patterns:
 - C2 (Loop 1), C#2 (Loop 2), D2 (Loop 3), D#2 (Stop), E2 (Loop 4)
 
-### 4. USynth Generator (`usynth_generator.py`)
+### 4. USynth Generator (`usynth_notes.py`)
 Generates complete octave C1 through B1 with function names:
 - Loop patterns, mute, repeat, tempo multipliers (Time x2/x3/x4), stop
 
