@@ -34,3 +34,21 @@ Generates complete octave C1 through B1 with function names:
 2. Install required packages:
 ```bash
 pip install -r requirements.txt
+```
+## Usage
+Run any generator script:
+
+bash
+```python
+python main_ableton_generator.py
+python beatmaker_generator.py
+python subcraft_generator.py
+python usynth_generator.py
+Each script will create a folder with sequentially numbered MIDI files ready for import into Ableton Live.
+```
+
+## How It Works
+Octave Correction: Automatically adjusts for Ableton's piano roll display (one octave lower than standard MIDI)
+Track Naming: Embeds track names in MIDI metadata (Ableton shows these instead of "Track 0")
+Sequential Numbering: Files are numbered 01, 02, 03... from lowest to highest pitch
+Descriptive Filenames: Match Ableton track names for easy identification
