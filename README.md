@@ -44,8 +44,9 @@ python main_ableton_generator.py
 python beatmaker_generator.py
 python subcraft_generator.py
 python usynth_generator.py
-Each script will create a folder with sequentially numbered MIDI files ready for import into Ableton Live.
 ```
+Each script will create a folder with sequentially numbered MIDI files ready for import into Ableton Live.
+
 
 ## How It Works
 Octave Correction: Automatically adjusts for Ableton's piano roll display (one octave lower than standard MIDI)
