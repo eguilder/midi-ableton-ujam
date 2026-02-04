@@ -4,21 +4,28 @@ import os
 import re
 
 # Create output directory
-output_dir = "notes_subcraft"
+output_dir = "notes_pianist"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
 # List of notes with their custom track names
 notes_data = [
-    {"file_note": "C2", "track_name": "Loop 1 C2"},
-    {"file_note": "C#2", "track_name": "Loop 2 C#2"},
-    {"file_note": "D2", "track_name": "Loop 3 D2"},
-    {"file_note": "D#2", "track_name": "Stop D#2"},
-    {"file_note": "E2", "track_name": "Loop 4 E2"}
+    {"file_note": "C1", "track_name": "Phrase 1 C1"},
+    {"file_note": "C#1", "track_name": "Low Chord C#1"},
+    {"file_note": "D1", "track_name": "Phrase 2 D1"},
+    {"file_note": "D#1", "track_name": "High Chord D#1"},
+    {"file_note": "E1", "track_name": "Phrase 3 E1"},
+    {"file_note": "F1", "track_name": "Phrase 4 F1"},
+    {"file_note": "F#1", "track_name": "Fill 1 F#1"},
+    {"file_note": "G1", "track_name": "Phrase 5 G1"},
+    {"file_note": "G#1", "track_name": "Fill 2 G#1"},
+    {"file_note": "A1", "track_name": "Phrase 6 A1"},
+    {"file_note": "A#1", "track_name": "Fill 3 for A#1"},
+    {"file_note": "B1", "track_name": "Phrase 7 B1"}
 ]
 
 print("=" * 70)
-print("SUBCRAFT NOTE GENERATOR WITH TRACK-NAME FILENAMES")
+print("PIANIST NOTE GENERATOR WITH TRACK-NAME FILENAMES")
 print("=" * 70)
 print(f"Generating {len(notes_data)} notes in '{output_dir}' folder")
 print("✓ Filenames match Ableton MIDI clip names")
@@ -96,15 +103,9 @@ for file_number, note_info in enumerate(notes_with_midi, start=1):
     track.append(MetaMessage('time_signature', numerator=4, denominator=4, 
                             clocks_per_click=24, notated_32nd_notes_per_beat=8, time=0))
     
-    # Add note (8 bars at 120 BPM = 3840 ticks)
-    bars = 8  # Change this to any number of bars
-    note_duration = bars * 480  # 480 ticks per bar at 120 BPM
-
+    # Add note (4 bars at 120 BPM = 1920 ticks)
     track.append(Message('note_on', note=ableton_midi, velocity=64, time=0))
-    track.append(Message('note_off', note=ableton_midi, velocity=64, time=note_duration))
-
-    track.append(Message('note_on', note=ableton_midi, velocity=64, time=0))
-    track.append(Message('note_off', note=ableton_midi, velocity=64, time=note_duration))
+    track.append(Message('note_off', note=ableton_midi, velocity=64, time=1920))
     
     # Add end of track
     track.append(MetaMessage('end_of_track', time=0))
@@ -155,40 +156,49 @@ for i, note_info in enumerate(notes_with_midi, start=1):
 
 print()
 print("SEQUENTIAL ORDER (by pitch, low to high):")
-print("1. Loop 1 C2  - Primary loop pattern (lowest pitch)")
-print("2. Loop 2 C#2 - Secondary loop pattern")
-print("3. Loop 3 D2  - Tertiary loop pattern")
-print("4. Stop D#2   - Break/transition point")
-print("5. Loop 4 E2  - Quaternary loop pattern (highest pitch)")
+print("1. Phrase 1 C1  - Primary phrase pattern (lowest pitch)")
+print("2. Low Chord C#1 - Low chord progression")
+print("3. Phrase 2 D1  - Secondary phrase pattern")
+print("4. High Chord D#1 - High chord progression")
+print("5. Phrase 3 E1  - Tertiary phrase pattern")
+print("6. Phrase 4 F1  - Quaternary phrase pattern")
+print("7. Fill 1 F#1   - First fill pattern")
+print("8. Phrase 5 G1  - Fifth phrase pattern")
+print("9. Fill 2 G#1   - Second fill pattern")
+print("10. Phrase 6 A1  - Sixth phrase pattern")
+print("11. Fill 3 for A#1 - Third fill pattern")
+print("12. Phrase 7 B1  - Seventh phrase pattern (highest pitch)")
 print()
 print("IMPORT INTO ABLETON:")
-print("1. Go to the 'notes_subcraft' folder")
+print("1. Go to the 'notes_pianist' folder")
 print("2. Drag and drop MIDI files into Ableton")
-print("3. Tracks will be named with loop/stop names (e.g., 'Loop 1 C2')")
+print("3. Tracks will be named with phrase/fill/chord names (e.g., 'Phrase 1 C1')")
 print("4. Filenames match track names (with underscores instead of spaces)")
-print("5. Files are numbered 01-05 by pitch for easy organization")
+print("5. Files are numbered 01-12 by pitch for easy organization")
 print()
 print("NOTE RANGE DETAILS:")
-print("• Range: C2 to E2 in Ableton notation")
-print("• Corresponds to: C3 to E3 in standard notation")
-print("• Frequency range: 130.81 Hz to 164.81 Hz")
+print("• Range: C1 to B1 in Ableton notation")
+print("• Corresponds to: C2 to B2 in standard notation")
+print("• Frequency range: 65.41 Hz to 123.47 Hz")
 print("• Perfect range for basslines and rhythmic patterns")
 print()
-print("SUBCRAFT PATTERN ORGANIZATION:")
-print("• Loops 1-4: Progressive loop patterns")
-print("• Stop: Designated break or transition point")
+print("PIANIST PATTERN ORGANIZATION:")
+print("• Phrases 1-7: Progressive musical phrase patterns")
+print("• Fills 1-3: Decorative fill patterns")
+print("• Low/High Chords: Chord progressions at different octaves")
 print("• Sequential numbering indicates natural pitch progression")
 print("• Use patterns in order for evolving sequences")
 print()
 print("WORKFLOW SUGGESTIONS:")
-print("1. Start with Loop 1 for basic foundation")
-print("2. Progress through Loops 2-3 for variation")
-print("3. Use Stop for dramatic breaks or transitions")
-print("4. Finish with Loop 4 for climax sections")
-print("5. Combine loops to create dynamic arrangements")
+print("1. Start with Phrase 1 for basic foundation")
+print("2. Use Low/High Chords for harmonic progression")
+print("3. Insert Fill patterns for transitions and decoration")
+print("4. Progress through Phrases 2-7 for variation and development")
+print("5. Combine phrases, chords, and fills to create dynamic arrangements")
 print()
 print("PRODUCTION TIPS:")
-print("• Loop 1-3: Use for verse sections")
-print("• Stop D#2: Perfect for pre-chorus builds")
-print("• Loop 4: Ideal for chorus or drop sections")
-print("• Combine loops for A/B/C song structures")
+print("• Phrases 1-3: Use for verse sections and introductions")
+print("• Fill patterns: Perfect for transitions between sections")
+print("• Chords: Use for harmonic foundation and emotional impact")
+print("• Phrases 4-7: Ideal for chorus, bridge, and climax sections")
+print("• Combine elements for A/B/C song structures with harmonic progression")

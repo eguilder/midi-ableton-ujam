@@ -3,14 +3,23 @@ from mido import Message, MidiFile, MidiTrack, MetaMessage
 import os
 import re
 
-def create_note_midi_ableton_final(ableton_display_name, file_number, duration_ticks=1920, bpm=120):
+# ====== ADD THIS GLOBAL VARIABLE ======
+# Duration in MIDI ticks (8 bars at 120 BPM = 3840 ticks)
+# Change this single variable to adjust duration for all functions
+DEFAULT_DURATION_TICKS = 3840  # Changed from 1920 to 3840 for 8 bars
+# ======================================
+
+# Define note names and their indices (make it global)
+NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+
+def create_note_midi_ableton_final(ableton_display_name, file_number, duration_ticks=DEFAULT_DURATION_TICKS, bpm=120):
     """
     Create MIDI file where filename is sequentially numbered
     
     Args:
         ableton_display_name: What you want to see in Ableton (e.g., 'C3')
         file_number: Sequential number for filename (e.g., 1, 2, 3...)
-        duration_ticks: Duration in MIDI ticks (default: 4 bars at 120 BPM)
+        duration_ticks: Duration in MIDI ticks (default: 8 bars at 120 BPM)
         bpm: Tempo in beats per minute
     """
     # Parse the note name and octave from the display name
@@ -21,12 +30,9 @@ def create_note_midi_ableton_final(ableton_display_name, file_number, duration_t
     note_name = match.group(1)
     octave = int(match.group(2))
     
-    # Define note names and their indices
-    note_names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-    
     # Find the index of the note
     try:
-        note_index = note_names.index(note_name)
+        note_index = NOTE_NAMES.index(note_name)
     except ValueError:
         raise ValueError(f"Invalid note name: {note_name}. Use C, C#, D, D#, E, F, F#, G, G#, A, A#, or B")
     
@@ -44,7 +50,7 @@ def create_note_midi_ableton_final(ableton_display_name, file_number, duration_t
     standard_midi = ableton_midi  # Same MIDI number, different interpretation
     standard_octave = (standard_midi // 12) - 1  # Standard: C-1 = MIDI 0, C0 = MIDI 12, etc.
     standard_note_index = standard_midi % 12
-    standard_name = f"{note_names[standard_note_index]}{standard_octave}"
+    standard_name = f"{NOTE_NAMES[standard_note_index]}{standard_octave}"
     
     # Create a new MIDI file
     mid = MidiFile()
@@ -84,17 +90,18 @@ def create_note_midi_ableton_final(ableton_display_name, file_number, duration_t
     print(f"  • Plays at: {standard_name} pitch (standard notation)")
     print(f"  • MIDI note in file: {ableton_midi}")
     print(f"  • Frequency: {midi_to_frequency(ableton_midi):.2f} Hz")
+    print(f"  • Duration: {duration_ticks} ticks ({duration_ticks/1920} bars)")
     
     return mid
 
-def create_note_midi_standard(standard_display_name, file_number, duration_ticks=1920, bpm=120):
+def create_note_midi_standard(standard_display_name, file_number, duration_ticks=DEFAULT_DURATION_TICKS, bpm=120):
     """
     Create MIDI file using STANDARD MIDI notation (one octave higher than Ableton)
     
     Args:
         standard_display_name: Note name in standard notation (e.g., 'C4' for middle C)
         file_number: Sequential number for filename (e.g., 1, 2, 3...)
-        duration_ticks: Duration in MIDI ticks (default: 4 bars at 120 BPM)
+        duration_ticks: Duration in MIDI ticks (default: 8 bars at 120 BPM)
         bpm: Tempo in beats per minute
     """
     # Parse the note name and octave from the display name
@@ -105,12 +112,9 @@ def create_note_midi_standard(standard_display_name, file_number, duration_ticks
     note_name = match.group(1)
     octave = int(match.group(2))
     
-    # Define note names and their indices
-    note_names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-    
     # Find the index of the note
     try:
-        note_index = note_names.index(note_name)
+        note_index = NOTE_NAMES.index(note_name)
     except ValueError:
         raise ValueError(f"Invalid note name: {note_name}. Use C, C#, D, D#, E, F, F#, G, G#, A, A#, or B")
     
@@ -127,7 +131,7 @@ def create_note_midi_standard(standard_display_name, file_number, duration_ticks
     ableton_midi = standard_midi  # Same MIDI number, different interpretation
     ableton_octave = (ableton_midi // 12) - 2  # Ableton: C-2 = MIDI 0, C-1 = MIDI 12, etc.
     ableton_note_index = ableton_midi % 12
-    ableton_display = f"{note_names[ableton_note_index]}{ableton_octave}"
+    ableton_display = f"{NOTE_NAMES[ableton_note_index]}{ableton_octave}"
     
     # Create a new MIDI file
     mid = MidiFile()
@@ -167,6 +171,7 @@ def create_note_midi_standard(standard_display_name, file_number, duration_ticks
     print(f"  • Will display in Ableton as: {ableton_display}")
     print(f"  • MIDI note in file: {standard_midi}")
     print(f"  • Frequency: {midi_to_frequency(standard_midi):.2f} Hz")
+    print(f"  • Duration: {duration_ticks} ticks ({duration_ticks/1920} bars)")
     
     return mid
 
@@ -174,7 +179,7 @@ def midi_to_frequency(midi_note):
     """Convert MIDI note number to frequency in Hz"""
     return 440.0 * (2.0 ** ((midi_note - 69) / 12.0))
 
-def generate_ableton_range(start_note="C0", end_note="C6", include_track_names=True):
+def generate_ableton_range(start_note="C0", end_note="C6", include_track_names=True, duration_ticks=DEFAULT_DURATION_TICKS):
     """
     Generate MIDI files for a range of notes with sequential filenames
     
@@ -182,6 +187,7 @@ def generate_ableton_range(start_note="C0", end_note="C6", include_track_names=T
         start_note: Starting note in Ableton notation (e.g., 'C0')
         end_note: Ending note in Ableton notation (e.g., 'C6')
         include_track_names: If True, adds track name metadata
+        duration_ticks: Duration in MIDI ticks (default: 8 bars at 120 BPM)
     """
     # Create output directory
     output_dir = "midi_files_ableton_sequential"
@@ -191,6 +197,7 @@ def generate_ableton_range(start_note="C0", end_note="C6", include_track_names=T
     print("Generating MIDI files for Ableton Live")
     print("=" * 70)
     print(f"Range: {start_note} to {end_note}")
+    print(f"Duration: {duration_ticks} ticks ({duration_ticks/1920} bars)")
     print("Filenames are sequentially numbered from lowest to highest note")
     if include_track_names:
         print("✓ Track names will be set in MIDI metadata")
@@ -208,12 +215,9 @@ def generate_ableton_range(start_note="C0", end_note="C6", include_track_names=T
     end_note_name = end_match.group(1)
     end_octave = int(end_match.group(2))
     
-    # Define note names and their indices
-    note_names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-    
     # Find indices
-    start_note_index = note_names.index(start_note_name)
-    end_note_index = note_names.index(end_note_name)
+    start_note_index = NOTE_NAMES.index(start_note_name)
+    end_note_index = NOTE_NAMES.index(end_note_name)
     
     # Generate all notes in the range (sorted by MIDI number = pitch)
     all_notes = []
@@ -231,7 +235,7 @@ def generate_ableton_range(start_note="C0", end_note="C6", include_track_names=T
             note_end_index = 12  # All notes in the octave
         
         for note_idx in range(note_start_index, note_end_index):
-            note_name = note_names[note_idx]
+            note_name = NOTE_NAMES[note_idx]
             display_name = f"{note_name}{octave}"
             
             # Calculate MIDI number for sorting
@@ -255,17 +259,17 @@ def generate_ableton_range(start_note="C0", end_note="C6", include_track_names=T
         
         try:
             if include_track_names:
-                create_note_midi_ableton_final(display_name, file_number, duration_ticks=1920)
+                create_note_midi_ableton_final(display_name, file_number, duration_ticks=duration_ticks)
             else:
                 # Fallback to simple creation without track names
                 mid = MidiFile()
                 track = MidiTrack()
                 mid.tracks.append(track)
                 track.append(Message('note_on', note=midi_num, velocity=64, time=0))
-                track.append(Message('note_off', note=midi_num, velocity=64, time=1920))
+                track.append(Message('note_off', note=midi_num, velocity=64, time=duration_ticks))
                 filename = f"{file_number:02d} {display_name}.mid"
                 mid.save(filename)
-                print(f"Created: {filename} (no track name)")
+                print(f"Created: {filename} (no track name, duration: {duration_ticks} ticks)")
             
             created_count += 1
         except ValueError as e:
@@ -277,13 +281,14 @@ def generate_ableton_range(start_note="C0", end_note="C6", include_track_names=T
     print()
     print("=" * 70)
     print(f"Successfully created {created_count} MIDI files in '{output_dir}' directory")
+    print(f"✓ Duration: {duration_ticks} ticks ({duration_ticks/1920} bars)")
     if include_track_names:
         print("✓ Track names are embedded in MIDI files")
         print("✓ Ableton will show the track names instead of 'Track 0'")
     print("✓ Files are numbered sequentially from lowest to highest note")
     print()
 
-def generate_standard_range(start_note="C0", end_note="C6"):
+def generate_standard_range(start_note="C0", end_note="C6", duration_ticks=DEFAULT_DURATION_TICKS):
     """
     Generate MIDI files for a range of notes using STANDARD MIDI notation
     with sequential numbering
@@ -291,6 +296,7 @@ def generate_standard_range(start_note="C0", end_note="C6"):
     Args:
         start_note: Starting note in STANDARD notation (e.g., 'C0')
         end_note: Ending note in STANDARD notation (e.g., 'C6')
+        duration_ticks: Duration in MIDI ticks (default: 8 bars at 120 BPM)
     """
     # Create output directory
     output_dir = "midi_files_standard_sequential"
@@ -300,6 +306,7 @@ def generate_standard_range(start_note="C0", end_note="C6"):
     print("Generating MIDI files using STANDARD MIDI notation")
     print("=" * 70)
     print(f"Range: {start_note} to {end_note}")
+    print(f"Duration: {duration_ticks} ticks ({duration_ticks/1920} bars)")
     print("Filenames use standard notation (one octave higher than Ableton)")
     print("✓ Files are numbered sequentially from lowest to highest note")
     print("✓ Track names are embedded in MIDI files")
@@ -317,12 +324,9 @@ def generate_standard_range(start_note="C0", end_note="C6"):
     end_note_name = end_match.group(1)
     end_octave = int(end_match.group(2))
     
-    # Define note names and their indices
-    note_names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-    
     # Find indices
-    start_note_index = note_names.index(start_note_name)
-    end_note_index = note_names.index(end_note_name)
+    start_note_index = NOTE_NAMES.index(start_note_name)
+    end_note_index = NOTE_NAMES.index(end_note_name)
     
     # Generate all notes in the range (sorted by MIDI number = pitch)
     all_notes = []
@@ -340,7 +344,7 @@ def generate_standard_range(start_note="C0", end_note="C6"):
             note_end_index = 12  # All notes in the octave
         
         for note_idx in range(note_start_index, note_end_index):
-            note_name = note_names[note_idx]
+            note_name = NOTE_NAMES[note_idx]
             display_name = f"{note_name}{octave}"
             
             # Calculate standard MIDI number for sorting
@@ -363,7 +367,7 @@ def generate_standard_range(start_note="C0", end_note="C6"):
         os.chdir(output_dir)
         
         try:
-            create_note_midi_standard(display_name, file_number, duration_ticks=1920)
+            create_note_midi_standard(display_name, file_number, duration_ticks=duration_ticks)
             created_count += 1
         except ValueError as e:
             print(f"Skipping {display_name}: {e}")
@@ -374,22 +378,24 @@ def generate_standard_range(start_note="C0", end_note="C6"):
     print()
     print("=" * 70)
     print(f"Successfully created {created_count} MIDI files in '{output_dir}' directory")
+    print(f"✓ Duration: {duration_ticks} ticks ({duration_ticks/1920} bars)")
     print("✓ Files are numbered sequentially from lowest to highest")
     print("✓ Track names are embedded in MIDI files")
     print()
 
-def generate_all_notes_c0_to_c6():
+def generate_all_notes_c0_to_c6(duration_ticks=DEFAULT_DURATION_TICKS):
     """Generate all notes from C0 to C6 in Ableton notation with sequential numbering"""
-    generate_ableton_range("C0", "C6", include_track_names=True)
+    generate_ableton_range("C0", "C6", include_track_names=True, duration_ticks=duration_ticks)
 
-def generate_standard_c0_to_c6():
+def generate_standard_c0_to_c6(duration_ticks=DEFAULT_DURATION_TICKS):
     """Generate all notes from C0 to C6 in STANDARD notation with sequential numbering"""
-    generate_standard_range("C0", "C6")
+    generate_standard_range("C0", "C6", duration_ticks=duration_ticks)
 
-def generate_middle_c_range():
+def generate_middle_c_range(duration_ticks=DEFAULT_DURATION_TICKS):
     """Generate a practical range around middle C (C3 in Ableton notation)"""
     print("Generating practical range around Middle C (C3 in Ableton)")
     print("=" * 70)
+    print(f"Duration: {duration_ticks} ticks ({duration_ticks/1920} bars)")
     
     output_dir = "middle_c_range_sequential"
     if not os.path.exists(output_dir):
@@ -402,10 +408,10 @@ def generate_middle_c_range():
     notes_to_generate = []
     
     for octave in [2, 3, 4]:  # C2, C3, C4 in Ableton
-        for note_name in ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']:
+        for note_name in NOTE_NAMES:  # Use the global NOTE_NAMES
             display_name = f"{note_name}{octave}"
             # Calculate MIDI number for sorting
-            note_index = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'].index(note_name)
+            note_index = NOTE_NAMES.index(note_name)  # Use the global NOTE_NAMES
             midi_num = (octave + 2) * 12 + note_index
             notes_to_generate.append((display_name, midi_num))
     
@@ -436,7 +442,7 @@ def generate_middle_c_range():
             
             # Add note
             track.append(Message('note_on', note=midi_num, velocity=64, time=0))
-            track.append(Message('note_off', note=midi_num, velocity=64, time=1920))
+            track.append(Message('note_off', note=midi_num, velocity=64, time=duration_ticks))
             
             # Add end of track
             track.append(MetaMessage('end_of_track', time=0))
@@ -451,7 +457,7 @@ def generate_middle_c_range():
             # Calculate standard notation for display
             standard_octave = (midi_num // 12) - 1
             standard_note_index = midi_num % 12
-            standard_name = f"{note_names[standard_note_index]}{standard_octave}"
+            standard_name = f"{NOTE_NAMES[standard_note_index]}{standard_octave}"  # Use the global NOTE_NAMES
             print(f"  Plays at: {standard_name} pitch (standard notation)")
             
             created_count += 1
@@ -461,6 +467,7 @@ def generate_middle_c_range():
     os.chdir(original_dir)
     print()
     print(f"Created {created_count} files in '{output_dir}' directory")
+    print(f"✓ Duration: {duration_ticks} ticks ({duration_ticks/1920} bars)")
     print("✓ Files are numbered sequentially from lowest to highest")
 
 def show_example_output():
@@ -473,6 +480,7 @@ def show_example_output():
     print("37 C3.mid    | 48   | C4             | 'Plays at: C4 pitch' (Middle C)")
     print("73 C6.mid    | 96   | C7             | 'Plays at: C7 pitch'")
     print()
+    print(f"Duration: {DEFAULT_DURATION_TICKS} ticks ({DEFAULT_DURATION_TICKS/1920} bars)")
     print("Key: Ableton C3 = MIDI 48 = Standard C4 = Middle C")
     print()
 
@@ -480,6 +488,7 @@ if __name__ == "__main__":
     print("=" * 70)
     print("MIDI FILE GENERATOR WITH CORRECT PITCH DISPLAY")
     print("=" * 70)
+    print(f"Default Duration: {DEFAULT_DURATION_TICKS} ticks ({DEFAULT_DURATION_TICKS/1920} bars)")
     print("Creates MIDI files numbered from lowest to highest note")
     print("✓ Correctly displays 'Plays at: C7 pitch' for C6 in Ableton")
     print()
@@ -505,14 +514,21 @@ if __name__ == "__main__":
         elif choice == "3":
             generate_middle_c_range()
         elif choice == "4":
+            # Optional: Allow user to specify custom duration
+            custom_duration = input(f"Enter custom duration in ticks (press Enter for default {DEFAULT_DURATION_TICKS}): ").strip()
+            if custom_duration:
+                duration = int(custom_duration)
+            else:
+                duration = DEFAULT_DURATION_TICKS
+                
             notation = input("Use (A)bleton or (S)tandard notation? ").strip().upper()
             start_note = input("Enter start note: ").strip()
             end_note = input("Enter end note: ").strip()
             
             if notation == "S" or notation == "STANDARD":
-                generate_standard_range(start_note, end_note)
+                generate_standard_range(start_note, end_note, duration_ticks=duration)
             else:
-                generate_ableton_range(start_note, end_note, include_track_names=True)
+                generate_ableton_range(start_note, end_note, include_track_names=True, duration_ticks=duration)
         else:
             print("Invalid choice. Generating default range (Ableton C0 to C6)...")
             generate_all_notes_c0_to_c6()
@@ -524,6 +540,7 @@ if __name__ == "__main__":
         print("✓ 'Plays at: C7 pitch' for file '73 C6.mid' (not C8)")
         print("✓ Ableton C6 = Standard C7 = MIDI 96")
         print("✓ Middle C: Ableton C3 = Standard C4 = MIDI 48")
+        print(f"✓ Duration: {DEFAULT_DURATION_TICKS} ticks ({DEFAULT_DURATION_TICKS/1920} bars)")
         print("✓ All pitch references are now correct!")
         
     except KeyboardInterrupt:

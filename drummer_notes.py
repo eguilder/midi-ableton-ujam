@@ -4,21 +4,40 @@ import os
 import re
 
 # Create output directory
-output_dir = "notes_subcraft"
+output_dir = "notes_drummer"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
 # List of notes with their custom track names
 notes_data = [
-    {"file_note": "C2", "track_name": "Loop 1 C2"},
-    {"file_note": "C#2", "track_name": "Loop 2 C#2"},
-    {"file_note": "D2", "track_name": "Loop 3 D2"},
-    {"file_note": "D#2", "track_name": "Stop D#2"},
-    {"file_note": "E2", "track_name": "Loop 4 E2"}
+    {"file_note": "C3", "track_name": "Verse 1 C3"},
+    {"file_note": "C#3", "track_name": "Intro 1 C#3"},
+    {"file_note": "D3", "track_name": "Verse 2 D3"},
+    {"file_note": "D#3", "track_name": "Intro 2 D#3"},
+    {"file_note": "E3", "track_name": "Verse 3 E3"},
+    {"file_note": "F3", "track_name": "Verse 4 F3"},
+    {"file_note": "F#3", "track_name": "Fill 1 F#3"},
+    {"file_note": "G3", "track_name": "Verse 5 G3"},
+    {"file_note": "G#3", "track_name": "Fill 2 G#3"},
+    {"file_note": "A3", "track_name": "Chorus 1 A3"},
+    {"file_note": "A#3", "track_name": "Fill 3 A#3"},
+    {"file_note": "B3", "track_name": "Chorus 2 B3"},
+    {"file_note": "C4", "track_name": "Chorus 3 C4"},
+    {"file_note": "C#4", "track_name": "Ending 1 C#4"},
+    {"file_note": "D4", "track_name": "Chorus 4 D4"},
+    {"file_note": "D#4", "track_name": "Ending 2 D#4"},
+    {"file_note": "E4", "track_name": "Chorus 5 E4"},
+    {"file_note": "F4", "track_name": "Special 1 F4"},
+    {"file_note": "F#4", "track_name": "Breakdown 1 F#4"},
+    {"file_note": "G4", "track_name": "Special 2 G4"},
+    {"file_note": "G#4", "track_name": "Breakdown 2 G#4"},
+    {"file_note": "A4", "track_name": "Special 3 A4"},
+    {"file_note": "A#4", "track_name": "Breakdown 3 A#4"},
+    {"file_note": "B4", "track_name": "Stop B4"}
 ]
 
 print("=" * 70)
-print("SUBCRAFT NOTE GENERATOR WITH TRACK-NAME FILENAMES")
+print("DRUMMER NOTE GENERATOR WITH TRACK-NAME FILENAMES")
 print("=" * 70)
 print(f"Generating {len(notes_data)} notes in '{output_dir}' folder")
 print("✓ Filenames match Ableton MIDI clip names")
@@ -96,15 +115,9 @@ for file_number, note_info in enumerate(notes_with_midi, start=1):
     track.append(MetaMessage('time_signature', numerator=4, denominator=4, 
                             clocks_per_click=24, notated_32nd_notes_per_beat=8, time=0))
     
-    # Add note (8 bars at 120 BPM = 3840 ticks)
-    bars = 8  # Change this to any number of bars
-    note_duration = bars * 480  # 480 ticks per bar at 120 BPM
-
+    # Add note (4 bars at 120 BPM = 1920 ticks)
     track.append(Message('note_on', note=ableton_midi, velocity=64, time=0))
-    track.append(Message('note_off', note=ableton_midi, velocity=64, time=note_duration))
-
-    track.append(Message('note_on', note=ableton_midi, velocity=64, time=0))
-    track.append(Message('note_off', note=ableton_midi, velocity=64, time=note_duration))
+    track.append(Message('note_off', note=ableton_midi, velocity=64, time=1920))
     
     # Add end of track
     track.append(MetaMessage('end_of_track', time=0))
@@ -155,40 +168,70 @@ for i, note_info in enumerate(notes_with_midi, start=1):
 
 print()
 print("SEQUENTIAL ORDER (by pitch, low to high):")
-print("1. Loop 1 C2  - Primary loop pattern (lowest pitch)")
-print("2. Loop 2 C#2 - Secondary loop pattern")
-print("3. Loop 3 D2  - Tertiary loop pattern")
-print("4. Stop D#2   - Break/transition point")
-print("5. Loop 4 E2  - Quaternary loop pattern (highest pitch)")
+print("1. Verse 1 C3     - First verse pattern (lowest pitch)")
+print("2. Intro 1 C#3    - First introduction pattern")
+print("3. Verse 2 D3     - Second verse pattern")
+print("4. Intro 2 D#3    - Second introduction pattern")
+print("5. Verse 3 E3     - Third verse pattern")
+print("6. Verse 4 F3     - Fourth verse pattern")
+print("7. Fill 1 F#3     - First drum fill pattern")
+print("8. Verse 5 G3     - Fifth verse pattern")
+print("9. Fill 2 G#3     - Second drum fill pattern")
+print("10. Chorus 1 A3   - First chorus pattern")
+print("11. Fill 3 A#3    - Third drum fill pattern")
+print("12. Chorus 2 B3   - Second chorus pattern")
+print("13. Chorus 3 C4   - Third chorus pattern")
+print("14. Ending 1 C#4  - First ending pattern")
+print("15. Chorus 4 D4   - Fourth chorus pattern")
+print("16. Ending 2 D#4  - Second ending pattern")
+print("17. Chorus 5 E4   - Fifth chorus pattern")
+print("18. Special 1 F4  - First special pattern")
+print("19. Breakdown 1 F#4 - First breakdown pattern")
+print("20. Special 2 G4  - Second special pattern")
+print("21. Breakdown 2 G#4 - Second breakdown pattern")
+print("22. Special 3 A4  - Third special pattern")
+print("23. Breakdown 3 A#4 - Third breakdown pattern")
+print("24. Stop B4       - Stop/break pattern (highest pitch)")
 print()
 print("IMPORT INTO ABLETON:")
-print("1. Go to the 'notes_subcraft' folder")
+print("1. Go to the 'notes_drummer' folder")
 print("2. Drag and drop MIDI files into Ableton")
-print("3. Tracks will be named with loop/stop names (e.g., 'Loop 1 C2')")
+print("3. Tracks will be named with verse/chorus/fill names (e.g., 'Verse 1 C3')")
 print("4. Filenames match track names (with underscores instead of spaces)")
-print("5. Files are numbered 01-05 by pitch for easy organization")
+print("5. Files are numbered 01-24 by pitch for easy organization")
 print()
 print("NOTE RANGE DETAILS:")
-print("• Range: C2 to E2 in Ableton notation")
-print("• Corresponds to: C3 to E3 in standard notation")
-print("• Frequency range: 130.81 Hz to 164.81 Hz")
-print("• Perfect range for basslines and rhythmic patterns")
+print("• Range: C3 to B4 in Ableton notation")
+print("• Corresponds to: C3 to B4 in standard notation (same)")
+print("• Frequency range: 130.81 Hz to 493.88 Hz")
+print("• Perfect range for drum patterns and rhythmic elements")
 print()
-print("SUBCRAFT PATTERN ORGANIZATION:")
-print("• Loops 1-4: Progressive loop patterns")
-print("• Stop: Designated break or transition point")
-print("• Sequential numbering indicates natural pitch progression")
-print("• Use patterns in order for evolving sequences")
+print("DRUMMER PATTERN ORGANIZATION:")
+print("• Verses 1-5: Verse drum patterns for main sections")
+print("• Choruses 1-5: Chorus drum patterns for impactful sections")
+print("• Intros 1-2: Introduction patterns for song openings")
+print("• Fills 1-3: Drum fill patterns for transitions")
+print("• Endings 1-2: Ending patterns for song conclusions")
+print("• Specials 1-3: Special effect drum patterns")
+print("• Breakdowns 1-3: Breakdown sections with stripped-down drums")
+print("• Stop: Stop/break pattern for dramatic pauses")
+print("• Sequential organization follows musical structure progression")
 print()
 print("WORKFLOW SUGGESTIONS:")
-print("1. Start with Loop 1 for basic foundation")
-print("2. Progress through Loops 2-3 for variation")
-print("3. Use Stop for dramatic breaks or transitions")
-print("4. Finish with Loop 4 for climax sections")
-print("5. Combine loops to create dynamic arrangements")
+print("1. Start with Intro patterns for song openings")
+print("2. Use Verse patterns for main song sections")
+print("3. Insert Fill patterns between sections for smooth transitions")
+print("4. Switch to Chorus patterns for impactful, energetic sections")
+print("5. Use Breakdowns for dynamic contrast and tension building")
+print("6. Apply Special patterns for unique musical moments")
+print("7. End with Ending patterns for song conclusions")
+print("8. Use Stop for dramatic pauses and breaks")
 print()
 print("PRODUCTION TIPS:")
-print("• Loop 1-3: Use for verse sections")
-print("• Stop D#2: Perfect for pre-chorus builds")
-print("• Loop 4: Ideal for chorus or drop sections")
-print("• Combine loops for A/B/C song structures")
+print("• Intros & Verses: Use for song beginnings and main sections")
+print("• Fills: Perfect for transitions between verse and chorus")
+print("• Choruses: Use for most energetic and memorable sections")
+print("• Breakdowns: Ideal for building tension before drops")
+print("• Specials: Add unique character and variation")
+print("• Endings: Create satisfying conclusions to songs")
+print("• Combine patterns to build complete song arrangements")

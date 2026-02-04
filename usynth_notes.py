@@ -102,9 +102,12 @@ for file_number, note_info in enumerate(notes_with_midi, start=1):
     track.append(MetaMessage('time_signature', numerator=4, denominator=4, 
                             clocks_per_click=24, notated_32nd_notes_per_beat=8, time=0))
     
-    # Add note (4 bars at 120 BPM = 1920 ticks)
+    # Add note (8 bars at 120 BPM = 1920 ticks)
+    bars = 8  # Change this to any number of bars
+    note_duration = bars * 480  # 480 ticks per bar at 120 BPM
+
     track.append(Message('note_on', note=ableton_midi, velocity=64, time=0))
-    track.append(Message('note_off', note=ableton_midi, velocity=64, time=1920))
+    track.append(Message('note_off', note=ableton_midi, velocity=64, time=note_duration))
     
     # Add end of track
     track.append(MetaMessage('end_of_track', time=0))
