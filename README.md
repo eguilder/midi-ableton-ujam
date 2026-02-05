@@ -1,6 +1,6 @@
 # MIDI Generators for Ableton Live
 
-A collection of Python scripts for generating MIDI files designed to control sequencer- and phrase-based instruments in **Ableton Live**, **UJAM**, and **Native Instruments** products. All generators create Ableton-ready MIDI clips with correct octave handling, embedded track names, and predictable note layouts.
+A collection of Python scripts for generating MIDI files designed to control sequencer- and phrase-based instruments for usage with **Ableton Live**, **UJAM**, **Native Instruments** and **Audiomodern** products. All generators create Ableton-ready MIDI clips with correct octave handling, embedded track names, and predictable note layouts. Other DAWs can use these sequencer notes as well.
 
 The MIDI clips in this repo can either be generated via scripts or used directly inside Ableton Live.
 
@@ -120,11 +120,18 @@ These generators follow **Native Instruments’ phrase-based keyboard layouts**,
 - **C3–D#4** → Pattern 1–16
 
 ---
+## Audiomodern Generators
+
+### 1. Playbeat
+**Remix Groove selection (chromatic)**:
+- **C-3–B-4** → Groove 1–12
 
 ## Installation
 
 1. Install Python **3.6 or higher**
 2. Install dependencies:
+
+---
 
 ```bash
 pip install -r requirements.txt
@@ -138,6 +145,7 @@ The note data is already present in this repo, in the folders notes_* and midi_f
 To re-generate the data, run any generator script directly:
 
 ```bash
+<<<<<<< HEAD
 python ./generators_ableton/create_chords.py
 python ./generators_ableton/create_notes.py
 python ./generators_ableton/instrument_notes.py
@@ -158,6 +166,27 @@ python ./generators_ujam/subcraft_notes.py
 python ./generators_ujam/usynth_notes.py
 python ./generators_ujam/vbassist_notes.py
 python ./generators_ujam/vguitarist_notes.py
+=======
+python beatmaker_notes.py
+python create_chords.py
+python create_notes.py
+python drumlab_notes.py
+python drummer_notes.py
+python instrument_notes.py
+python pianist_notes.py
+python playbeat_notes.py
+python playbox_notes.py
+python playseries_notes.py
+python s-horns_notes.py
+python s-percussionist_notes.py
+python session_notes.py
+python spotlight_notes.py
+python subcraft_notes.py
+python trk-01_notes.py
+python usynth_notes.py
+python vbassist_notes.py
+python vguitarist_notes.py
+>>>>>>> 39d4143 (added Playbeat)
 ```
 
 Each script creates a separate folder of **Ableton-ready MIDI clips**, numbered and named for immediate use in the corresponding plugin track.
