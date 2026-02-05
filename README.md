@@ -119,6 +119,10 @@ These generators follow **Native Instruments’ phrase-based keyboard layouts**,
 **Extended chromatic pattern range**:
 - **C3–D#4** → Pattern 1–16
 
+### 6. Playbox
+
+### 6. TRK-01
+
 ---
 ## Audiomodern Generators
 
@@ -145,7 +149,6 @@ The note data is already present in this repo, in the folders notes_* and midi_f
 To re-generate the data, run any generator script directly:
 
 ```bash
-<<<<<<< HEAD
 python ./generators_ableton/create_chords.py
 python ./generators_ableton/create_notes.py
 python ./generators_ableton/instrument_notes.py
@@ -166,27 +169,8 @@ python ./generators_ujam/subcraft_notes.py
 python ./generators_ujam/usynth_notes.py
 python ./generators_ujam/vbassist_notes.py
 python ./generators_ujam/vguitarist_notes.py
-=======
-python beatmaker_notes.py
-python create_chords.py
-python create_notes.py
-python drumlab_notes.py
-python drummer_notes.py
-python instrument_notes.py
-python pianist_notes.py
-python playbeat_notes.py
-python playbox_notes.py
-python playseries_notes.py
-python s-horns_notes.py
-python s-percussionist_notes.py
-python session_notes.py
-python spotlight_notes.py
-python subcraft_notes.py
-python trk-01_notes.py
-python usynth_notes.py
-python vbassist_notes.py
-python vguitarist_notes.py
->>>>>>> 39d4143 (added Playbeat)
+
+python ./generators_audiomodern/playbeat_notes.py
 ```
 
 Each script creates a separate folder of **Ableton-ready MIDI clips**, numbered and named for immediate use in the corresponding plugin track.
