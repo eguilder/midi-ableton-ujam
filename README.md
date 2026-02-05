@@ -1,34 +1,61 @@
 # MIDI Generators for Ableton Live
 
-A collection of Python scripts for generating MIDI files specifically designed to control Ujam sequencers in Ableton Live, with proper MIDI clip track naming and octave correction. The notes are already created in this repo and can be used directly in Ableton Live.
+A collection of Python scripts for generating MIDI files designed to control sequencer- and phrase-based instruments in **Ableton Live**, **UJAM**, and **Native Instruments** products. All generators create Ableton-ready MIDI clips with correct octave handling, embedded track names, and predictable note layouts.
+
+The MIDI clips in this repo can either be generated via scripts or used directly inside Ableton Live.
+
+---
 
 ## Features
 
-- **Ableton-compatible MIDI generation** (corrects for Ableton's octave offset)
-- **Track name metadata** (no more "Track 0" in Ableton)
-- **Multiple generators for different use cases**
-- **Sequentially numbered filenames** (organized by pitch)
-- **Descriptive track names** matching filenames
+- **Ableton-correct MIDI note mapping** (handles Ableton’s octave offset)
+- **Embedded track-name metadata** (no more “Track 0” clips)
+- **Multiple generator layouts** for different instrument ecosystems
+- **Sequentially numbered filenames** (sorted by pitch)
+- **Clip names that match filenames** for easy browsing
 
-## Generators Included
+---
+
+## Generator Categories
+
+Generators are organized into **three logical categories**, based on the target ecosystem:
+
+1. **Ableton-native generators**
+2. **UJAM generators**
+3. **Native Instruments generators**
+
+---
+
+## Ableton Generators
 
 ### 1. Main Ableton Generator (`create_notes.py`)
-Generates any range of notes from C0 to C6 in both Ableton and Standard MIDI notation.
+Generates any range of notes from **C0 to C6**, supporting both Ableton and standard MIDI notation.
 
-### 2. Beatmaker Generator (`beatmaker_notes.py`)
+### 2. Chord Generator (`create_chords.py`)
+Generates chord triads and progressions for use with Ableton clips and sequencer instruments:
+- Major and minor triads (all 12 keys)
+- Common progressions (I–IV–V, ii–V–I, etc.)
+- Multiple voicings (root, 1st inversion, 2nd inversion)
+- Roman numeral labeling
+
+---
+
+## UJAM Generators
+
+### 1. Beatmaker Generator (`beatmaker_notes.py`)
 Generates specific notes for beatmaking with section names:
 - C#1 (Intro), D#1 (Fill), F#1 (Verse 1), G#1 (Verse 2), A#1 (Fill)
 - C#2 (Chorus 1), D#2 (Chorus 2), F#2 (Break), G#2 (Special), A#2 (Ending)
 
-### 3. Subcraft Generator (`subcraft_notes.py`)
+### 2. Subcraft Generator (`subcraft_notes.py`)
 Generates C2 through E2 with loop patterns:
 - C2 (Loop 1), C#2 (Loop 2), D2 (Loop 3), D#2 (Stop), E2 (Loop 4)
 
-### 4. USynth Generator (`usynth_notes.py`)
+### 3. USynth Generator (`usynth_notes.py`)
 Generates complete octave C1 through B1 with function names:
 - Loop patterns, mute, repeat, tempo multipliers (Time x2/x3/x4), stop
 
-### 5. V-Drummer Generator (`drummer_notes.py`)
+### 4. V-Drummer Generator (`drummer_notes.py`)
 Generates comprehensive drum patterns across multiple octaves:
 - **C3-G3**: Verse 1-5 patterns
 - **C#3, D#3**: Intro 1-2 patterns
@@ -39,60 +66,104 @@ Generates comprehensive drum patterns across multiple octaves:
 - **F#4, G#4, A#4**: Breakdown 1-3 patterns
 - **B4**: Stop pattern
 
-### 6. V-Bassist Generator (`vbassist_notes.py`)
+### 5. V-Bassist Generator (`vbassist_notes.py`)
 Generates bass patterns with phrases, styles, and transitions:
 - **C0**: Silence pattern
 - **C#0-B1**: Phrases 1-18 with Intros and Fills
 - **C2-A#2**: Styles 1-6 with Style Intros and Style Fills
 - **B2**: Stop pattern
 
-### 7. V-Pianist Generator (`pianist_notes.py`)
+### 6. V-Pianist Generator (`pianist_notes.py`)
 Generates piano phrases and chord progressions:
 - **C1-B1**: Phrases 1-7 with Fills
 - **C#1, D#1**: Low Chord and High Chord progressions
 
-### 8. V-Guitarist Generator (`vguitarist_notes.py`)
+### 7. V-Guitarist Generator (`vguitarist_notes.py`)
 Generates guitar patterns across multiple ranges:
 - **C0**: Silence pattern
 - **C#0-B1**: Phrases 1-23
 - **C2-A#2**: Styles 1-11
 - **B2**: Stop pattern
 
-### 9. Chord Generator (`create_chords.py`)
-Generates chord triads organized by key and tonality for use with sequencers like V-Bassist and V-Guitarist:
-- **Major and minor triads** for all 12 keys
-- **Chord progressions** in common patterns (I-IV-V, ii-V-I, etc.)
-- **Multiple voicings** (root position, first inversion, second inversion)
-- **Key-specific organization** with Roman numeral notation
-- **Export formats** suitable for chord progressions and arpeggiation patterns
+---
+
+## Native Instruments Generators
+
+These generators follow **Native Instruments’ phrase-based keyboard layouts**, commonly used across Kontakt-based instruments.
+
+### 1. Spotlight Series
+**Patterns and Phrases across two octaves**:
+- **C1–B1** → Pattern 1–12
+- **C2–B2** → Phrase 1–12
+
+### 2. Drumlab
+**Groove selection (chromatic)**:
+- **C-1–B-1** → Groove 1–12
+
+### 3. Session Percussionist
+**Instrument × Phrase grid**:
+- **C1–E1** → Inst 1 Phrase 1–5
+- **C2–E2** → Inst 2 Phrase 1–5
+- **C3–E3** → Inst 3 Phrase 1–5
+- **C4–E4** → Inst 4 Phrase 1–5
+
+### 4. Session Horns
+**White-key phrase layout**:
+- **C1–A1** → Phrase 1–6
+
+### 5. Session Player
+**Chromatic phrase triggering**:
+- **C1–G1** → Phrase 1–8
+
+### 6. Play Series
+**Extended chromatic pattern range**:
+- **C3–D#4** → Pattern 1–16
+
+---
 
 ## Installation
 
-1. Install Python 3.6 or higher
-2. Install required packages:
+1. Install Python **3.6 or higher**
+2. Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
+
+---
+
 ## Usage
-Run any generator script:
 
-bash
-```python
-python create_notes.py
+Run any any generator script directly:
+
+```bash
 python beatmaker_notes.py
-python subcraft_notes.py
-python usynth_notes.py
-python drummer_notes.py
-python vbassist_notes.py
-python pianist_notes.py
-python vguitarist_notes.py
 python create_chords.py
+python create_notes.py
+python drumlab_notes.py
+python drummer_notes.py
+python instrument_notes.py
+python pianist_notes.py
+python playbox_notes.py
+python playseries_notes.py
+python s-horns_notes.py
+python s-percussionist_notes.py
+python session_notes.py
+python spotlight_notes.py
+python subcraft_notes.py
+python trk-01_notes.py
+python usynth_notes.py
+python vbassist_notes.py
+python vguitarist_notes.py
 ```
-Each script will create a folder with sequentially numbered MIDI files ready for import into Ableton Live.
 
+Each script creates a folder of **Ableton-ready MIDI clips**, numbered and named for immediate use.
+
+---
 
 ## How It Works
-- Octave Correction: Automatically adjusts for Ableton's piano roll display (one octave lower than standard MIDI)
-- Track Naming: Embeds track names in MIDI metadata (Ableton shows these instead of "Track 0")
-- Sequential Numbering: Files are numbered 01, 02, 03... from lowest to highest pitch
-- Descriptive Filenames: Match Ableton track names for easy identification
+
+- **Octave correction**: Adjusts for Ableton’s piano roll octave display
+- **Track naming**: Stores clip names in MIDI metadata
+- **Predictable ordering**: Lowest to highest pitch
+- **Controller-friendly layouts**: Designed for Push, Launchpad, APC, and keyboard controllers
