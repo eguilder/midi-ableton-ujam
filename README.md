@@ -134,30 +134,32 @@ pip install -r requirements.txt
 
 ## Usage
 
-Run any any generator script directly:
+Run any generator script directly:
 
 ```bash
-python beatmaker_notes.py
-python create_chords.py
-python create_notes.py
-python drumlab_notes.py
-python drummer_notes.py
-python instrument_notes.py
-python pianist_notes.py
-python playbox_notes.py
-python playseries_notes.py
-python s-horns_notes.py
-python s-percussionist_notes.py
-python session_notes.py
-python spotlight_notes.py
-python subcraft_notes.py
-python trk-01_notes.py
-python usynth_notes.py
-python vbassist_notes.py
-python vguitarist_notes.py
+python ./generators_ableton/create_chords.py
+python ./generators_ableton/create_notes.py
+python ./generators_ableton/instrument_notes.py
+
+python ./generators_native/drumlab_notes.py
+python ./generators_native/playbox_notes.py
+python ./generators_native/playseries_notes.py
+python ./generators_native/s-horns_notes.py
+python ./generators_native/s-percussionist_notes.py
+python ./generators_native/session_notes.py
+python ./generators_native/spotlight_notes.py
+python ./generators_native/trk-01_notes.py
+
+python ./generators_ujam/beatmaker_notes.py
+python ./generators_ujam/drummer_notes.py
+python ./generators_ujam/pianist_notes.py
+python ./generators_ujam/subcraft_notes.py
+python ./generators_ujam/usynth_notes.py
+python ./generators_ujam/vbassist_notes.py
+python ./generators_ujam/vguitarist_notes.py
 ```
 
-Each script creates a folder of **Ableton-ready MIDI clips**, numbered and named for immediate use.
+Each script creates a separate folder of **Ableton-ready MIDI clips**, numbered and named for immediate use in the corresponding plugin track.
 
 ---
 
