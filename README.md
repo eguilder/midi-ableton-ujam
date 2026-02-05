@@ -134,7 +134,8 @@ pip install -r requirements.txt
 
 ## Usage
 
-Run any generator script directly:
+The note data is already present in this repo, in the folders notes_* and midi_files_ableton_*.
+To re-generate the data, run any generator script directly:
 
 ```bash
 python ./generators_ableton/create_chords.py
